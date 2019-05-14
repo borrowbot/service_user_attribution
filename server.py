@@ -19,7 +19,7 @@ interface = LocalInterface()
 
 # workers
 worker_logger = get_default_logger('worker')
-task_obj = SubmissionParserWorker(worker_logger, CONFIG['sql'])
+task_obj = UserAttributionWorker(worker_logger, CONFIG['sql'])
 worker_thread = threading.Thread(target=Worker, args=(interface, task_obj.main, worker_logger))
 worker_thread.setDaemon(True)
 worker_thread.start()
