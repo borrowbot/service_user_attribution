@@ -38,7 +38,7 @@ class UserAttributionBlockGenerator(WorkBlockGenerator):
 
         last_result = result_set[0][0]
         if last_result is None:
-            raise Exception("Attempting to start submission parser without any submissions")
+            raise Exception("Attempting to start user attribution service without any submissions")
         else:
             return last_result
 
