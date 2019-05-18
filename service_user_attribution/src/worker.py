@@ -131,7 +131,7 @@ class UserAttributionWorker(object):
             type = self.get_comment_type(comment_text)
             users = self.get_users(comment_text, user_table)
             if type == "loan":
-                users.append(submission.author_id)
+                users.add(submission.author_id)
             source_user = c.author_id
             self.get_users_and_add_attribution(
                 ret, type, users, c.comment_id,
