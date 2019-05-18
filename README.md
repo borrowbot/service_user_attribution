@@ -15,15 +15,16 @@ In addition to the `submissions` and `comments` tables documented in `collection
 
 ```
 CREATE TABLE user_attribution (
-  user_id VARCHAR(16),
-  resource_id VARCHAR(16),
-  PRIMARY KEY (user_id, resource_id),
-  type VARCHAR,
-  source BOOL
+    compound_key VARCHAR(32) PRIMARY KEY,
+    submission_datetime DATETIME,
+    user_id VARCHAR(16),
+    resource_id VARCHAR(16),
+    type VARCHAR(16),
+    source BOOL
 );
 ```
 
-The type field takes one of the following values:
+The primary key `compound_key` always takes the form of the user_id and resource_id concatenated with a `+` separating them. The type field takes one of the following values:
 
 * `request`: A submission with `[req]` as part of its title string.
 * `loan`: A comment containing `$loan`.

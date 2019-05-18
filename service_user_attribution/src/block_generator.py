@@ -7,7 +7,7 @@ from lib_learning.collection.base_generator import WorkBlockGenerator
 
 
 # 2016-01-01 00:00:00 UTC
-DEFAULT_START_DATE = datetime.utcfromtimestamp(1496275200)
+DEFAULT_START_DATE = datetime.utcfromtimestamp(1483228800)
 
 
 class UserAttributionBlockGenerator(WorkBlockGenerator):
@@ -44,7 +44,7 @@ class UserAttributionBlockGenerator(WorkBlockGenerator):
 
 
     def get_newest_parsed_submission(self):
-        query = 'SELECT MAX(req_datetime) as max FROM requests;'
+        query = 'SELECT MAX(submission_datetime) as max FROM user_attribution;'
 
         db = sql.connect(**self.sql_params)
         cur = db.cursor()
