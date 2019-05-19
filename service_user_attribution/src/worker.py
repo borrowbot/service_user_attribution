@@ -9,9 +9,10 @@ from lib_borrowbot_core.raw_objects.submission import bulk_retrieve_comments, Su
 
 
 class UserAttributionWorker(object):
-    def __init__(self, logger, sql_params):
+    def __init__(self, logger, sql_params, blacklist):
         self.logger = logger
         self.sql_params = sql_params
+        self.blacklist = blacklist
         self.sql_writer = UserAttributionWriter(self.logger, self.sql_params, batch_size=float('inf'))
 
 
@@ -125,12 +126,12 @@ class UserAttributionWorker(object):
 
         # Parse submission comments
         for c in submission.comments:
-            if c.author_id == "t2_hz19i":
+            if c.author_id in self.blacklist:
                 continue
             comment_text= c.text.lower()
             type = self.get_comment_type(comment_text)
             users = self.get_users(comment_text, user_table)
-            if type == "loan":
+            if type == "loan" and submission.author_id is not None:
                 users.add(submission.author_id)
             source_user = c.author_id
             self.get_users_and_add_attribution(

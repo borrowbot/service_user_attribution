@@ -1,0 +1,10 @@
+port:
+sql:
+  host:
+  port:
+  user:
+  passwd:
+  db:
+blacklist:
+    - t2_6l4z3 # AutoModerator
+    - t2_hz19i #LoansBot
