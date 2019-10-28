@@ -9,7 +9,6 @@ from baseimage.logger.logger import get_default_logger
 from service_user_attribution.src.worker import UserAttributionWorker
 from service_user_attribution.src.block_generator import UserAttributionBlockGenerator
 
-from lib_learning.collection.workers.base_worker import Worker
 from lib_learning.collection.scheduler import Scheduler
 from lib_learning.collection.interfaces.local_interface import LocalInterface
 
@@ -19,16 +18,14 @@ interface = LocalInterface()
 
 # workers
 worker_logger = get_default_logger('worker')
-task_obj = UserAttributionWorker(worker_logger, CONFIG['sql'], CONFIG['blacklist'])
-worker_thread = threading.Thread(target=Worker, args=(interface, task_obj.main, worker_logger))
-worker_thread.setDaemon(True)
-worker_thread.start()
+worker = UserAttributionWorker(interface, worker_logger, CONFIG['sql'], CONFIG['blacklist'])
+worker.start()
 
 # schedulers
 scheduler_logger = get_default_logger('scheduler')
 block_generator = UserAttributionBlockGenerator(CONFIG['sql'])
 scheduler = Scheduler(
-    'service_submission_parser', interface, block_generator, scheduler_logger, blocking=True,
+    'service_submission_parser', interface, block_generator, scheduler_logger,
     task_timeout=600, confirm_interval=10
 )
 

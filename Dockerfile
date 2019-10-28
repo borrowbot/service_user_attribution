@@ -3,7 +3,6 @@ FROM baseimage
 ENV SERVICE_NAME service_user_attribution
 ENV BASE_PATH $SVC_PATH/$SERVICE_NAME/
 WORKDIR $BASE_PATH
-RUN mkdir $BASE_PATH/logs
 
 
 # ============= Dependencies ============= #
@@ -30,4 +29,4 @@ RUN pip install -r requirements.txt
 ADD . $BASE_PATH
 RUN pip install .
 
-ENTRYPOINT $BASE_PATH/entrypoint.sh
+ENTRYPOINT $LIB_PATH/baseimage/entrypoint.sh

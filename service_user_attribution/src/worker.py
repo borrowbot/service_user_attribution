@@ -3,13 +3,16 @@ from sqlalchemy import create_engine
 from datetime import datetime
 import re
 
+from lib_learning.collection.base_worker import Worker
 from service_user_attribution.src.wrapper import UserAttribution
 from service_user_attribution.src.writer import UserAttributionWriter
 from lib_borrowbot_core.raw_objects.submission import bulk_retrieve_comments, Submission
 
 
-class UserAttributionWorker(object):
-    def __init__(self, logger, sql_params, blacklist):
+class UserAttributionWorker(Worker):
+    def __init__(self, interface, logger, sql_params, blacklist):
+        super().__init__(interface, self.main, logger)
+        
         self.logger = logger
         self.sql_params = sql_params
         self.blacklist = blacklist
